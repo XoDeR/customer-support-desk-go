@@ -1,0 +1,44 @@
+# Binaries
+bin/
+dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go
+coverage.html
+coverage.out
+vendor/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Frontend (web/)
+web/node_modules/
+web/dist/
+web/.vite/
+web/coverage/
+
+# Local attachment storage
+storage/uploads/*
+!storage/uploads/.gitkeep
+
+# Logs / temp
+*.log
+tmp/
+temp/
