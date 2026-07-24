@@ -17,7 +17,18 @@ services:
     environment:
       DB_HOST: postgres
       REDIS_ADDR: redis:6379
+      CONFIG_PATH: config/app.dev.yaml
     ports: ["8080:8080"]
+    volumes: [attachments:/app/data/attachments]
+  worker:
+    profiles: ["app"]
+    build: .
+    command: ["/app/worker"]
+    depends_on: [postgres, redis]
+    environment:
+      DB_HOST: postgres
+      REDIS_ADDR: redis:6379
+      CONFIG_PATH: config/app.dev.yaml
     volumes: [attachments:/app/data/attachments]
 volumes:
   postgres_data:

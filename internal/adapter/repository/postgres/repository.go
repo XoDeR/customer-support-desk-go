@@ -333,14 +333,19 @@ func (r *Repository) DeleteSavedFilter(ctx context.Context, user, id uuidv7.UUID
 	return err
 }
 func (r *Repository) UpdateTeam(ctx context.Context, id uuidv7.UUID, name string) error {
-	_, err := r.q(ctx).ExecContext(ctx, `UPDATE teams SET name=$2 WHERE id=$1`, id, name); return err
+	_, err := r.q(ctx).ExecContext(ctx, `UPDATE teams SET name=$2 WHERE id=$1`, id, name)
+	return err
 }
 func (r *Repository) DeleteTeam(ctx context.Context, id uuidv7.UUID) error {
-	_, err := r.q(ctx).ExecContext(ctx, `DELETE FROM teams WHERE id=$1`, id); return err
+	_, err := r.q(ctx).ExecContext(ctx, `DELETE FROM teams WHERE id=$1`, id)
+	return err
 }
 func (r *Repository) UpdateTag(ctx context.Context, id uuidv7.UUID, name string) error {
-	_, err := r.q(ctx).ExecContext(ctx, `UPDATE tags SET name=$2 WHERE id=$1`, id, name); return err
+	_, err := r.q(ctx).ExecContext(ctx, `UPDATE tags SET name=$2 WHERE id=$1`, id, name)
+	return err
 }
 func (r *Repository) UpdateSavedFilter(ctx context.Context, user, id uuidv7.UUID, name string, query map[string]any) error {
-	b,_:=json.Marshal(query);_,err:=r.q(ctx).ExecContext(ctx,`UPDATE saved_filters SET name=$3,query=$4,updated_at=now() WHERE id=$1 AND user_id=$2`,id,user,name,b);return err
+	b, _ := json.Marshal(query)
+	_, err := r.q(ctx).ExecContext(ctx, `UPDATE saved_filters SET name=$3,query=$4,updated_at=now() WHERE id=$1 AND user_id=$2`, id, user, name, b)
+	return err
 }

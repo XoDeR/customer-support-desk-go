@@ -33,10 +33,14 @@ web/node_modules/
 web/dist/
 web/.vite/
 web/coverage/
+web/test-results/
+web/playwright-report/
+web/blob-report/
 
 # Local attachment storage
 storage/uploads/*
 !storage/uploads/.gitkeep
+data/attachments/
 
 # Logs / temp
 *.log

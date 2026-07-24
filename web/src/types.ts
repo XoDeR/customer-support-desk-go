@@ -60,3 +60,27 @@ export interface Attachment {
   size_bytes: number;
   created_at: string;
 }
+
+export interface CannedReply {
+  id: string;
+  title: string;
+  body: string;
+  team_id?: string | null;
+  created_by: string;
+}
+
+export interface SavedFilter {
+  id: string;
+  name: string;
+  query: {
+    q?: string;
+    status?: string;
+    priority?: string;
+    [key: string]: unknown;
+  };
+}
+
+export interface Tag {
+  id: string;
+  name: string;
+}

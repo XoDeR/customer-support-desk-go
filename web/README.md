@@ -1,48 +1,40 @@
-# Support Desk web
+# Web — Customer Support & SLA Desk
 
-React frontend for the Customer Support & SLA Desk.
+Vite + React + TypeScript + Tailwind + TanStack Query + Zustand.
 
-## Run locally
-
-Start the API on `http://localhost:8080`, then:
+## Run
 
 ```bash
-cd web
 npm install
 npm run dev
 ```
 
-Open `http://localhost:5173`. The API base defaults to
-`http://localhost:8080/api/v1`. Override it with `VITE_API_BASE_URL` in a
-`web/.env.local` file:
+Optional env (`.env` in `web/`):
 
-```env
-VITE_API_BASE_URL=http://localhost:8080/api/v1
 ```
-
-The API must allow the Vite origin (`http://localhost:5173`) with the
-`Authorization` header. The included backend router already has this
-development CORS configuration.
-# Customer Support & SLA Desk frontend
-
-React/Vite application for the Customer Support & SLA Desk API.
-
-## Run locally
-
-Start the API on `http://localhost:8080`, then:
-
-```sh
-cd web
-npm install
-npm run dev
-```
-
-Open the Vite URL shown in the terminal (normally `http://localhost:5173`).
-
-To override the API URL, create `web/.env.local`:
-
-```sh
 VITE_API_URL=http://localhost:8080/api/v1
 ```
 
-The app stores access and refresh tokens in local storage and refreshes an expired access token once after a `401`.
+Open http://localhost:5173
+
+### Accounts
+
+- Customer: register at `/register`
+- Agent: `agent@example.com` / `agent-password-change-me`
+- Admin: `admin@example.com` / `admin-password-change-me`
+- Seeded customer (after `make seed`): `customer@example.com` / `customer-password-change-me`
+
+### E2E smoke
+
+With API (`make run-api`) and `npm run dev` running:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+## Features
+
+- Customer portal: tickets, create, public replies, attachments, realtime cache invalidation
+- Agent dashboard: URL filters, saved filters, assign/status/escalate, internal notes, canned replies, tags, timeline
+- Agent tools page: manage canned replies and tags

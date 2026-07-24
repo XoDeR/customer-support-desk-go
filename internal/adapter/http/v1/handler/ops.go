@@ -33,8 +33,31 @@ func (h *Handler) CreateTeam(c *gin.Context) {
 	}
 	ok(c, http.StatusCreated, x)
 }
-func (h *Handler) UpdateTeam(c *gin.Context) { id,e:=uuidv7.Parse(c.Param("id"));var r struct{Name string `json:"name" binding:"required"`};if e==nil&&c.ShouldBindJSON(&r)==nil{e=h.Repo.UpdateTeam(c,id,r.Name)};if e!=nil{fail(c,e);return};ok(c,http.StatusOK,gin.H{}) }
-func (h *Handler) DeleteTeam(c *gin.Context) { id,e:=uuidv7.Parse(c.Param("id"));if e==nil{e=h.Repo.DeleteTeam(c,id)};if e!=nil{fail(c,e);return};ok(c,http.StatusOK,gin.H{}) }
+func (h *Handler) UpdateTeam(c *gin.Context) {
+	id, e := uuidv7.Parse(c.Param("id"))
+	var r struct {
+		Name string `json:"name" binding:"required"`
+	}
+	if e == nil && c.ShouldBindJSON(&r) == nil {
+		e = h.Repo.UpdateTeam(c, id, r.Name)
+	}
+	if e != nil {
+		fail(c, e)
+		return
+	}
+	ok(c, http.StatusOK, gin.H{})
+}
+func (h *Handler) DeleteTeam(c *gin.Context) {
+	id, e := uuidv7.Parse(c.Param("id"))
+	if e == nil {
+		e = h.Repo.DeleteTeam(c, id)
+	}
+	if e != nil {
+		fail(c, e)
+		return
+	}
+	ok(c, http.StatusOK, gin.H{})
+}
 func (h *Handler) Agents(c *gin.Context) {
 	x, e := h.Repo.Agents(c)
 	if e != nil {
@@ -136,7 +159,20 @@ func (h *Handler) DeleteTag(c *gin.Context) {
 	}
 	ok(c, http.StatusOK, gin.H{})
 }
-func (h *Handler) UpdateTag(c *gin.Context) { id,e:=uuidv7.Parse(c.Param("id"));var r struct{Name string `json:"name" binding:"required"`};if e==nil&&c.ShouldBindJSON(&r)==nil{e=h.Repo.UpdateTag(c,id,r.Name)};if e!=nil{fail(c,e);return};ok(c,http.StatusOK,gin.H{}) }
+func (h *Handler) UpdateTag(c *gin.Context) {
+	id, e := uuidv7.Parse(c.Param("id"))
+	var r struct {
+		Name string `json:"name" binding:"required"`
+	}
+	if e == nil && c.ShouldBindJSON(&r) == nil {
+		e = h.Repo.UpdateTag(c, id, r.Name)
+	}
+	if e != nil {
+		fail(c, e)
+		return
+	}
+	ok(c, http.StatusOK, gin.H{})
+}
 func (h *Handler) AttachTag(c *gin.Context) {
 	ticket, e := ticketID(c)
 	if e != nil {
@@ -195,4 +231,19 @@ func (h *Handler) DeleteSavedFilter(c *gin.Context) {
 	}
 	ok(c, http.StatusOK, gin.H{})
 }
-func (h *Handler) UpdateSavedFilter(c *gin.Context) { u,_:=middleware.Current(c);id,e:=uuidv7.Parse(c.Param("id"));var r struct{Name string `json:"name" binding:"required"`;Query map[string]any `json:"query"`};if e==nil&&c.ShouldBindJSON(&r)==nil{e=h.Repo.UpdateSavedFilter(c,u.ID,id,r.Name,r.Query)};if e!=nil{fail(c,e);return};ok(c,http.StatusOK,gin.H{}) }
+func (h *Handler) UpdateSavedFilter(c *gin.Context) {
+	u, _ := middleware.Current(c)
+	id, e := uuidv7.Parse(c.Param("id"))
+	var r struct {
+		Name  string         `json:"name" binding:"required"`
+		Query map[string]any `json:"query"`
+	}
+	if e == nil && c.ShouldBindJSON(&r) == nil {
+		e = h.Repo.UpdateSavedFilter(c, u.ID, id, r.Name, r.Query)
+	}
+	if e != nil {
+		fail(c, e)
+		return
+	}
+	ok(c, http.StatusOK, gin.H{})
+}

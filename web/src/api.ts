@@ -1,5 +1,15 @@
 import { useAuthStore, type Tokens } from "./store";
-import type { Agent, Attachment, Comment, Ticket, TimelineEvent, User } from "./types";
+import type {
+  Agent,
+  Attachment,
+  CannedReply,
+  Comment,
+  SavedFilter,
+  Tag,
+  Ticket,
+  TimelineEvent,
+  User,
+} from "./types";
 
 export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080/api/v1";
 
@@ -90,4 +100,31 @@ export const ticketsApi = {
     form.append("file", file);
     return api<Attachment>(`/tickets/${id}/attachments`, { method: "POST", body: form });
   },
+};
+
+export const opsApi = {
+  cannedReplies: () => api<CannedReply[]>("/canned-replies"),
+  createCannedReply: (title: string, body: string) =>
+    api<CannedReply>("/canned-replies", {
+      method: "POST",
+      body: JSON.stringify({ title, body }),
+    }),
+  deleteCannedReply: (id: string) =>
+    api<unknown>(`/canned-replies/${id}`, { method: "DELETE" }),
+  savedFilters: () => api<SavedFilter[]>("/saved-filters"),
+  createSavedFilter: (name: string, query: SavedFilter["query"]) =>
+    api<SavedFilter>("/saved-filters", {
+      method: "POST",
+      body: JSON.stringify({ name, query }),
+    }),
+  deleteSavedFilter: (id: string) =>
+    api<unknown>(`/saved-filters/${id}`, { method: "DELETE" }),
+  tags: () => api<Tag[]>("/tags"),
+  createTag: (name: string) =>
+    api<Tag>("/tags", { method: "POST", body: JSON.stringify({ name }) }),
+  attachTag: (ticketId: string, tagId: string) =>
+    api<unknown>(`/tickets/${ticketId}/tags`, {
+      method: "POST",
+      body: JSON.stringify({ tag_id: tagId }),
+    }),
 };
